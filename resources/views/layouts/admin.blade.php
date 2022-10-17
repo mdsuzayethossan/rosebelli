@@ -38,12 +38,12 @@
                     </div>
 
                     <!-- Settings Dropdown -->
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <div class="hidden lg:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
                                     class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                    <div>{{ Auth::user()->name }}</div>
+                                    <div>{{ Auth::guard('admin')->user()->name }}</div>
 
                                     <div class="ml-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -58,10 +58,10 @@
 
                             <x-slot name="content">
                                 <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('admin.logout') }}">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('logout')"
+                                    <x-dropdown-link :href="route('admin.logout')"
                                         onclick="event.preventDefault();
                                                         this.closest('form').submit();">
                                         {{ __('Log Out') }}
@@ -72,7 +72,27 @@
                     </div>
 
                     <!-- Hamburger -->
-                    <div class="-mr-2 flex items-center sm:hidden">
+                    <div class="-mr-2 flex items-center lg:hidden">
+                        <label
+                            class="btn border-none bg-transparent hover:bg-gray-100 hover:text-gray-500 rounded-md swap min-h-[35px] w-[35px] h-[35px] p-2 swap-rotate lg:hidden"
+                            for="my-drawer-2">
+                            <!-- this hidden checkbox controls the state -->
+                            <input type="checkbox" />
+
+                            <!-- hamburger icon -->
+                            <svg class="swap-off bg-none fill-current" xmlns="http://www.w3.org/2000/svg" width="32"
+                                height="32" viewBox="0 0 512 512">
+                                <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                            </svg>
+
+                            <!-- close icon -->
+                            <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="32"
+                                height="32" viewBox="0 0 512 512">
+                                <polygon
+                                    points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+                            </svg>
+
+                        </label>
                         <button @click="open = ! open"
                             class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -89,7 +109,7 @@
             </div>
 
             <!-- Responsive Navigation Menu -->
-            <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+            <div :class="{ 'block': open, 'hidden': !open }" class="hidden lg:hidden">
                 <div class="pt-2 pb-3 space-y-1">
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -99,16 +119,16 @@
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-t border-gray-200">
                     <div class="px-4">
-                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                        <div class="font-medium text-base text-gray-800">{{ Auth::guard('admin')->user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ Auth::guard('admin')->user()->email }}</div>
                     </div>
 
                     <div class="mt-3 space-y-1">
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
 
-                            <x-responsive-nav-link :href="route('logout')"
+                            <x-responsive-nav-link :href="route('admin.logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
@@ -131,6 +151,9 @@
             @yield('content')
         </main>
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    @yield('footer_script_admin')
 </body>
 
 </html>

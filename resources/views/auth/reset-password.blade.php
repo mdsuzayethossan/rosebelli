@@ -19,7 +19,8 @@
             <div>
                 <x-input-label for="email" :value="__('Email')" />
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)"
+                    required autofocus />
             </div>
 
             <!-- Password -->
@@ -33,9 +34,8 @@
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
+                <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                    name="password_confirmation" required />
             </div>
 
             <div class="flex items-center justify-end mt-4">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPasswordResetController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -58,9 +59,24 @@ Route::middleware('auth')->group(function () {
 
 //Admin Auth
 Route::prefix('admin')->group(function(){
-    Route::get('register', [AdminController::class, 'create']);
-    Route::post('register', [AdminController::class, 'store'])->name('admin.register');
-    Route::get('login', [AdminController::class, 'login_create']);          
-    Route::post('login', [AdminController::class, 'login_store'])->name('admin.login');
+    Route::get('login', [AdminController::class, 'login_create'])->middleware('guest:admin');          
+    Route::post('login', [AdminController::class, 'login_store'])->middleware('guest:admin')->name('admin.login');
+    Route::get('forgot-password', [AdminPasswordResetController::class, 'showForm'])
+                ->name('admin.password.request');
+    Route::post('forgot-password', [AdminPasswordResetController::class, 'submitForm'])
+    ->name('admin.password.email');
+
+    Route::get('password/reset/form/{token}', [AdminPasswordResetController::class, 'create'])
+                ->name('admin.password.reset');
+
+    Route::post('reset-password', [AdminPasswordResetController::class, 'store'])
+                ->name('admin.password.update');
+    
+    Route::middleware('admin')->group(function(){
+        Route::get('register', [AdminController::class, 'create']);
+        Route::post('register', [AdminController::class, 'store'])->name('admin.register');
+        Route::post('logout', [AdminController::class, 'admin_destroy'])->name('admin.logout');
+    });
+    
 });
 

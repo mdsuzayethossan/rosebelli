@@ -64,4 +64,12 @@ class AdminController extends Controller
 
         return redirect()->intended(RouteServiceProvider::ADMINHOME);
     }
+    public function admin_destroy(Request $request)
+    {
+        Auth::guard('admin')->logout();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/admin/login');
+    }
 }

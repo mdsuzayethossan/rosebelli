@@ -34,7 +34,10 @@
                         <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
                             exercitationem
                             quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                        <button class="btn btn-primary text-white">Get Started</button>
+                        <button
+                            class="px-6 bg-red-500 py-2 text-white transition ease-in duration-200 uppercase rounded-full border-2 border-red-500 focus:outline-none">
+                            Shop Now
+                        </button>
                     </div>
                 </div>
             </div>
@@ -50,17 +53,25 @@
                 <a class="tab tab-lifted">Tab 3</a>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div class="card card-compact bg-base-100 shadow-xl">
-                    <figure><img src="https://placeimg.com/400/225/arch" class="rounded" alt="Shoes" /></figure>
-                    <div class="card-body">
-                        <h2 class="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <p class="font-bold text-[16px] text-[#fb5d5d]"><b>৳</b><span>400</span></p>
-                        <div class="card-actions justify-center">
-                            <button class="btn btn-primary">Buy Now</button>
+                @foreach ($products as $product)
+                    <div class="card card-compact bg-base-100 shadow-xl">
+                        <a href="{{ route('product.details', $product->id) }}" class="cursor-pointer">
+                            <figure><img src="https://placeimg.com/400/225/arch" class="rounded" alt="Shoes" /></figure>
+                        </a>
+                        <div class="card-body">
+                            <h2 class="text-2xl uppercase text-gray-900 font-bold">Shoes!</h2>
+                            <p class="uppercase text-sm text-gray-500">If a dog chews shoes whose shoes does he choose?</p>
+                            <p class="font-bold text-xl text-[#fb5d5d]"><b>৳</b><span>400</span></p>
+                            <div class="card-actions justify-center">
+                                <a href="{{ route('product.details', $product->id) }}"
+                                    class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-red-500 hover:text-white border-2 border-red-500 focus:outline-none">
+                                    Add to cart
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </section>
