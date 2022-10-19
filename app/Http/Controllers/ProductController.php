@@ -62,6 +62,7 @@ class ProductController extends Controller
             'category_id' => $request->category,
             'subcategory_id' => $request->subcategory,
             'product_name' => $request->product_name,
+            'product_id' => uniqid(),
             'product_group' => $request->product_group,
             'product_price' => $request->product_price,
             'discount' => $request->discount,

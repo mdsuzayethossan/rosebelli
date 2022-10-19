@@ -18,13 +18,10 @@
                     <ul tabindex="0"
                         class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                         <li>
-                            <a class="justify-between">
-                                Profile
-                                <span class="badge">New</span>
+                            <a href="{{ route('product.form') }}" class="justify-between">
+                                Add product
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,6 +33,7 @@
                 <thead>
                     <tr>
                         <th>S/N</th>
+                        <th>Product Id</th>
                         <th>Category Name</th>
                         <th>Subategory Name</th>
                         <th>Product Name</th>
@@ -55,6 +53,7 @@
                     @foreach ($products as $product)
                         <tr>
                             <th>{{ $loop->index + 1 }}</th>
+                            <td>{{ $product->product_id }}</td>
                             <td>
                                 @if ($product->categories)
                                     {{ $product->categories->category_name }}

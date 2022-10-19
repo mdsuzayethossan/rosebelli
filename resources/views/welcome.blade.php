@@ -48,7 +48,7 @@
     <section class="mt-20">
         <div class="container">
             <div class="tabs justify-center mb-10">
-                <a class="tab tab-lifted tab-active">Tab 1</a>
+                <a class="tab tab-lifted tab-active">{{ $carts->count() }}</a>
                 <a class="tab tab-lifted">Tab 2</a>
                 <a class="tab tab-lifted">Tab 3</a>
             </div>
@@ -56,12 +56,20 @@
                 @foreach ($products as $product)
                     <div class="card card-compact bg-base-100 shadow-xl">
                         <a href="{{ route('product.details', $product->id) }}" class="cursor-pointer">
-                            <figure><img src="https://placeimg.com/400/225/arch" class="rounded" alt="Shoes" /></figure>
+                            <img class="w-full" src="{{ asset('uploads/products') }}/{{ $product->product_image }}"
+                                class="rounded" alt="Shoes" />
                         </a>
                         <div class="card-body">
-                            <h2 class="text-2xl uppercase text-gray-900 font-bold">Shoes!</h2>
-                            <p class="uppercase text-sm text-gray-500">If a dog chews shoes whose shoes does he choose?</p>
-                            <p class="font-bold text-xl text-[#fb5d5d]"><b>৳</b><span>400</span></p>
+                            <h2 class="text-2xl uppercase text-gray-900 font-bold">{{ $product->product_name }}</h2>
+                            <p class="uppercase text-sm text-gray-500">{{ $product->description }}</p>
+                            <div class="flex gap-4 w-14 items-center">
+                                <p class="font-bold text-lg text-[#fb5d5d]">
+                                    <b>৳</b><span>{{ $product->discount_price }}</span>
+                                </p>
+                                <p class="font-semibold text-md text-gray-500">
+                                    <del><b>৳</b><span>{{ $product->product_price }}</span></del>
+                                </p>
+                            </div>
                             <div class="card-actions justify-center">
                                 <a href="{{ route('product.details', $product->id) }}"
                                     class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-red-500 hover:text-white border-2 border-red-500 focus:outline-none">

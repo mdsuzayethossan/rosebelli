@@ -22,9 +22,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth','verified'])->name('dashboard');
 
-Route::get('/admin/dashboard', function () {
-    return view('admin_auth.dashboard');
-})->middleware('admin');
 //category
 Route::prefix('admin')->group(function(){
     Route::controller(CategoryController::class)->group(function(){
@@ -55,8 +52,12 @@ Route::prefix('admin')->group(function(){
 Route::controller(FrontendController::class)->group(function(){
     Route::get('/', 'index');
 });
+Route::controller(FrontendController::class)->group(function(){
+    Route::post('/add-cart', 'add_cart')->name('add.cart');
+});
 Route::controller(ProductDetailsController::class)->group(function () {
     Route::get('/product-details/${id}', 'details')->name('product.details');
+    
 });
 Route::controller(CartController::class)->group(function () {
     Route::get('/checkout', 'checkout')->name('checkout');

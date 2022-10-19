@@ -4,10 +4,10 @@
         <div class="container px-5 py-24 mx-auto">
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                    src="https://dummyimage.com/400x400">
+                    src="{{ asset('uploads/products') }}/{{ $single_product->product_image }}">
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     {{-- <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2> --}}
-                    <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">The Catcher in the Rye</h1>
+                    <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ $single_product->product_name }}</h1>
                     <div class="flex mb-4">
                         <span class="flex items-center">
                             <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -67,10 +67,7 @@
                             </a>
                         </span>
                     </div>
-                    <p class="leading-relaxed">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha
-                        taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn.
-                        Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra
-                        jean shorts keytar banjo tattooed umami cardigan.</p>
+                    <p class="leading-relaxed">{{ $single_product->description }}</p>
                     <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                         {{-- <div class="flex">
                             <span class="mr-3">Color</span>
@@ -84,17 +81,19 @@
                             <label class="label">
                             </label>
                             <label class="input-group h-5">
-                                <span class=" w-6 h-6 rounded-none
-                                "><svg
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                <span class="p-0 bg-transparent cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg"
+                                        id="product_decrement" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                                        stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                                     </svg>
 
                                 </span>
-                                <input type="text" placeholder="10" class="input text-center h-5 focus:outline-none" />
-                                <span class="p-0 "><svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                <input type="text" value="1" readonly id="product_quantity"
+                                    class="w-20 input text-center font-bold h-5 focus:outline-none text-gray-600" />
+                                <input type="hidden" name="" value="{{ $single_product->id }}" id="product_id">
+                                <span class="p-0 bg-transparent cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg"
+                                        id="product_increment" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                                        stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
@@ -122,9 +121,12 @@
                         </div> --}}
                     </div>
                     <div class="flex">
-                        <span class="title-font font-medium text-2xl text-gray-900">$58.00</span>
-                        <button
-                            class="flex ml-auto text-white bg-primary border-0 py-2 px-6 focus:outline-none rounded">Button</button>
+                        <p class="font-bold text-xl text-[#fb5d5d]">
+                            <b>৳</b><span>{{ $single_product->product_price }}</span>
+                        </p>
+                        <button class="flex ml-auto text-white bg-primary border-0 py-2 px-6 focus:outline-none rounded"
+                            id="add_to_cart">Add to
+                            cart</button>
                         <button
                             class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 hover:text-primary ml-4">
                             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -139,4 +141,74 @@
             </div>
         </div>
     </section>
+    @if (count($related_products) > 0)
+        <section>
+            <div class="container">
+                <h2 class="text-3xl font-bold text-center text-primary mb-10">Related Products</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    @foreach ($related_products as $related_product)
+                        <div class="card card-compact bg-base-100 shadow-xl">
+                            <a href="{{ route('product.details', $related_product->id) }}" class="cursor-pointer">
+                                <figure><img src="https://placeimg.com/400/225/arch" class="rounded" alt="Shoes" />
+                                </figure>
+                            </a>
+                            <div class="card-body">
+                                <h2 class="text-2xl uppercase text-gray-900 font-bold">
+                                    {{ $related_product->product_name }}
+                                </h2>
+                                <p class="uppercase text-sm text-gray-500">{{ $related_product->description }}</p>
+                                <p class="font-bold text-xl text-[#fb5d5d]">
+                                    <b>৳</b><span>{{ $related_product->product_price }}</span>
+                                </p>
+                                <div class="card-actions justify-center">
+                                    <a href="{{ route('product.details', $related_product->id) }}"
+                                        class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-red-500 hover:text-white border-2 border-red-500 focus:outline-none">
+                                        Add to cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </section>
+    @endif
+
+@endsection
+@section('footer_script')
+    <script>
+        $('#product_increment').click(function() {
+            $('#product_quantity').get(0).value++
+        });
+        $('#product_decrement').click(function() {
+            const quantity_curr = $('#product_quantity').val();
+            if (quantity_curr > 1) {
+                $('#product_quantity').get(0).value--
+            }
+        })
+    </script>
+    <script>
+        $('#add_to_cart').click(function() {
+            const product_id = $('#product_id').val();
+            const quantity_curr = $('#product_quantity').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('add.cart') }}",
+                data: {
+                    product_id: product_id,
+                    quantity: quantity_curr,
+                },
+                success: function(data) {
+                    alert(data)
+                }
+            });
+
+        });
+    </script>
 @endsection

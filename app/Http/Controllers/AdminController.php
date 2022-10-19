@@ -72,4 +72,7 @@ class AdminController extends Controller
 
         return redirect('/admin/login');
     }
+    public function admin_dashboard(){
+        return view('admin_auth.dashboard');
+    }
 }
