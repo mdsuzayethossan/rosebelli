@@ -50,17 +50,20 @@ Route::prefix('admin')->group(function(){
 
 //Frontend routes
 Route::controller(FrontendController::class)->group(function(){
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('index');
 });
 Route::controller(FrontendController::class)->group(function(){
     Route::post('/add-cart', 'add_cart')->name('add.cart');
+    Route::post('/filter-on-category', 'filter_on_category')->name('filter.on.category');
 });
 Route::controller(ProductDetailsController::class)->group(function () {
     Route::get('/product-details/${id}', 'details')->name('product.details');
     
 });
 Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'cart')->name('cart');
     Route::get('/checkout', 'checkout')->name('checkout');
 });
+
 
 require __DIR__.'/auth.php';

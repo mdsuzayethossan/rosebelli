@@ -48,11 +48,17 @@
     <section class="mt-20">
         <div class="container">
             <div class="tabs justify-center mb-10">
-                <a class="tab tab-lifted tab-active">{{ $carts->count() }}</a>
-                <a class="tab tab-lifted">Tab 2</a>
-                <a class="tab tab-lifted">Tab 3</a>
+                @foreach ($categories as $category)
+                    @if ($category == $category->first())
+                        <button id="{{ $category->id }}"
+                            class="tab tab-lifted tab-active category_filter">{{ $category->category_name }}</button>
+                    @else
+                        <button id="{{ $category->id }}"
+                            class="tab tab-lifted category_filter">{{ $category->category_name }}</button>
+                    @endif
+                @endforeach
             </div>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-3 gap-4" id="product_container">
                 @foreach ($products as $product)
                     <div class="card card-compact bg-base-100 shadow-xl">
                         <a href="{{ route('product.details', $product->id) }}" class="cursor-pointer">
@@ -89,6 +95,28 @@
         $('.tab-lifted').click(function() {
             $('.tab-lifted').removeClass('tab-active');
             $(this).addClass("tab-active");
+        });
+    </script>
+    <script>
+        $('.category_filter').click(function() {
+            const category_id = $(this).attr('id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('filter.on.category') }}",
+                data: {
+                    category_id: category_id,
+                },
+                success: function(data) {
+                    $('#product_container').html(data);
+                }
+            });
+
         });
     </script>
 @endsection
