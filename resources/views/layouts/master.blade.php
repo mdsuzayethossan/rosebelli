@@ -14,7 +14,12 @@
 
 <body>
     @php
+        $subtotal = 0;
         $carts = App\Models\Cart::where('user_id', Auth::id())->get();
+        foreach ($carts as $key => $cart) {
+            $subtotal += $cart->rel_to_product->discount_price * $cart->quantity;
+        }
+        
     @endphp
     <header>
         <nav class="container">
@@ -38,10 +43,13 @@
                             </label>
                             <div tabindex="0" class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
                                 <div class="card-body">
-                                    <span class="font-bold text-lg">8 Items</span>
-                                    <span class="text-info">Subtotal: $999</span>
+                                    <span class="font-bold text-lg">{{ $carts->count() }} Items</span>
+                                    <span class="text-info">Subtotal: <p class="text-base inline font-semibold">
+                                            <b>৳</b>{{ $subtotal }}
+                                        </p>
+                                    </span>
                                     <div class="card-actions">
-                                        <button class="btn btn-primary btn-block">View cart</button>
+                                        <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View cart</a>
                                     </div>
                                 </div>
                             </div>

@@ -100,7 +100,7 @@
                     </div>
                     <div class="flex">
                         <p class="font-bold text-xl text-[#fb5d5d]">
-                            <b>৳</b><span>{{ $single_product->product_price }}</span>
+                            <b>৳</b><span>{{ $single_product->discount_price }}</span>
                         </p>
                         @auth
                             <button class="flex ml-auto text-white bg-primary border-0 py-2 px-6 focus:outline-none rounded"
@@ -134,17 +134,22 @@
                     @foreach ($related_products as $related_product)
                         <div class="card card-compact bg-base-100 shadow-xl">
                             <a href="{{ route('product.details', $related_product->id) }}" class="cursor-pointer">
-                                <figure><img src="https://placeimg.com/400/225/arch" class="rounded" alt="Shoes" />
-                                </figure>
+                                <img class="w-full"
+                                    src="{{ asset('uploads/products') }}/{{ $related_product->product_image }}"
+                                    class="rounded" alt="Shoes" />
                             </a>
                             <div class="card-body">
                                 <h2 class="text-2xl uppercase text-gray-900 font-bold">
-                                    {{ $related_product->product_name }}
-                                </h2>
+                                    {{ $related_product->product_name }}</h2>
                                 <p class="uppercase text-sm text-gray-500">{{ $related_product->description }}</p>
-                                <p class="font-bold text-xl text-[#fb5d5d]">
-                                    <b>৳</b><span>{{ $related_product->product_price }}</span>
-                                </p>
+                                <div class="flex gap-4 w-14 items-center">
+                                    <p class="font-bold text-lg text-[#fb5d5d]">
+                                        <b>৳</b><span>{{ $related_product->discount_price }}</span>
+                                    </p>
+                                    <p class="font-semibold text-md text-gray-500">
+                                        <del><b>৳</b><span>{{ $related_product->product_price }}</span></del>
+                                    </p>
+                                </div>
                                 <div class="card-actions justify-center">
                                     <a href="{{ route('product.details', $related_product->id) }}"
                                         class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-red-500 hover:text-white border-2 border-red-500 focus:outline-none">
@@ -158,6 +163,8 @@
                 </div>
             </div>
         </section>
+    @else
+        <h3 class="text-center text-2xl py-4 font-semibold text-primary mb-10">This product has no items.</h3>
     @endif
 
 @endsection

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailsController;
@@ -62,7 +63,13 @@ Route::controller(ProductDetailsController::class)->group(function () {
 });
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'cart')->name('cart');
+    Route::post('/cart/update', 'cart_update')->name('cart.update');
+    Route::get('/cart/delete/${id}', 'cart_delete')->name('cart.delete');
     Route::get('/checkout', 'checkout')->name('checkout');
+});
+Route::controller(CheckoutController::class)->group(function () {
+    Route::get('/checkout', 'checkout')->name('checkout');
+    Route::post('/order', 'order')->name('order');
 });
 
 

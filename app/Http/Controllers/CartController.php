@@ -14,7 +14,20 @@ class CartController extends Controller
             'carts' => $carts,
         ]);
     }
-    function checkout(){
-        return view('checkout');
+
+    function cart_update(Request $request){
+        foreach($request->qtybutton as $cart_id=>$quantity)
+
+
+        cart::find($cart_id)->update([
+            'quantity'=>$quantity,
+        ]);
+        return back()->with('cart_updated', 'Cart updated successfully');
+
+    }
+    function cart_delete($id) {
+        Cart::find($id)->delete();
+        return back()->with('cart_delete', 'Cart deleted successfully');
+
     }
 }
