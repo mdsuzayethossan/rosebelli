@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Rosebelli</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -68,7 +68,7 @@
                                         <span class="badge">New</span>
                                     </a>
                                 </li>
-                                <li><a>Settings</a></li>
+                                <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf<a href="route('logout')"
@@ -99,8 +99,8 @@
     </main>
     <footer class="footer footer-center p-10 bg-[#292B37] text-white rounded">
         <div class="grid grid-flow-col gap-4">
-            <a class="link link-hover">About us</a>
-            <a class="link link-hover">Contact</a>
+            <a href="https://facebook.com/rosebellicom" class="link link-hover">Contact</a>
+            <a href="https://facebook.com/rosebellicom" class="link link-hover">About us</a>
             <a class="link link-hover">Jobs</a>
             <a class="link link-hover">Press kit</a>
         </div>
@@ -118,8 +118,8 @@
                             d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z">
                         </path>
                     </svg></a>
-                <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        class="fill-current">
+                <a href="https://web.facebook.com/rosebellicom"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" class="fill-current">
                         <path
                             d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z">
                         </path>
@@ -127,7 +127,8 @@
             </div>
         </div>
         <div>
-            <p>Copyright © 2022 - All right reserved by ACME Industries Ltd</p>
+            <p>Copyright © 2022 - All right reserved by <a href="https://rosebelli.com/"
+                    class="text-primary cursor-pointer font-semibold">Rosebelli</a></p>
         </div>
     </footer>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

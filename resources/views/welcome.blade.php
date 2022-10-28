@@ -5,39 +5,25 @@
             <div class="w-full">
                 <div class="max-w-full hero-content flex-col lg:flex-row-reverse">
                     <div class="w-3/5">
+
                         <div class="carousel carousel-center p-5 space-x-4 shadow rounded-box">
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placeimg.com/250/180/arch" class="rounded-box" />
-                            </div>
+                            @foreach ($products as $product)
+                                <div class="carousel-item">
+                                    <a href="{{ route('product.details', $product->id) }}">
+                                        <img src="{{ asset('uploads/products') }}/{{ $product->product_image }}"
+                                            class="rounded w-[400px] h-[400px]" alt="{{ $product->product_name }}" />
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="w-2/5">
-                        <h1 class="text-5xl font-bold">Box Office News!</h1>
-                        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                            exercitationem
-                            quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                        <button
+                        <h1 class="text-5xl font-bold">{{ $banner->title }}</h1>
+                        <p class="py-6">{{ $banner->description }}</p>
+                        <a href="{{ $banner->btn_link }}"
                             class="px-6 bg-red-500 py-2 text-white transition ease-in duration-200 uppercase rounded-full border-2 border-red-500 focus:outline-none">
-                            Shop Now
-                        </button>
+                            {{ $banner->btn_name }}
+                        </a>
                     </div>
                 </div>
             </div>

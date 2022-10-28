@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminGeneralController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -19,13 +20,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','verified'])->name('dashboard');
+
+Route::get('/dashboard', [FrontendController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 //category
-Route::prefix('admin')->group(function(){
-    Route::controller(CategoryController::class)->group(function(){
+Route::prefix('admin')->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
         Route::get('/category', 'create')->name('category.form');
         Route::post('/category/store', 'store')->name('category.store');
         Route::get('/category/update', 'category_update')->name('category.update');
@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function(){
     Route::resource('subcategory', SubCategoryController::class);
     Route::delete('/subcategory/forece/delete', [SubCategoryController::class, 'subcategory_forcedelete'])->name('subcategory.forece.delete');
     Route::get('/subcategory/restore/${id}', [SubCategoryController::class, 'restore'])->name('subcategory.restore');
-    Route::controller(ProductController::class)->group(function(){
+    Route::controller(ProductController::class)->group(function () {
         Route::get('/products', 'create')->name('product.form');
         Route::post('/getsubcategory', 'get_subcategory')->name('get.subcategory');
         Route::post('/product-store', 'store')->name('product.store');
@@ -46,20 +46,26 @@ Route::prefix('admin')->group(function(){
         Route::get('/product/restore/${id}', 'product_restore')->name('product.restore');
         Route::get('/view/products', 'view_product')->name('view.product');
     });
+    Route::controller(AdminGeneralController::class)->group(function () {
+        Route::get('/banner', 'banner')->name('banner');
+        Route::get('/view-orders', 'view_order')->name('view.order');
+        Route::get('/ordered-products/${id}', 'ordered_products')->name('ordered.products');
+        Route::post('/banner-store', 'banner_store')->name('banner.store');
+        Route::get('/banner-update', 'banner_update')->name('banner.update');
+    });
 });
 
 
 //Frontend routes
-Route::controller(FrontendController::class)->group(function(){
+Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'index')->name('index');
 });
-Route::controller(FrontendController::class)->group(function(){
+Route::controller(FrontendController::class)->group(function () {
     Route::post('/add-cart', 'add_cart')->name('add.cart');
     Route::post('/filter-on-category', 'filter_on_category')->name('filter.on.category');
 });
 Route::controller(ProductDetailsController::class)->group(function () {
     Route::get('/product-details/${id}', 'details')->name('product.details');
-    
 });
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'cart')->name('cart');
@@ -73,4 +79,4 @@ Route::controller(CheckoutController::class)->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

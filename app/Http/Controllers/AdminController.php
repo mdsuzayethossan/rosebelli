@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+
 class AdminController extends Controller
 {
     /**
@@ -26,7 +27,7 @@ class AdminController extends Controller
     {
         return view('admin_auth.login');
     }
-        /**
+    /**
      * Handle an incoming registration request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,7 +73,8 @@ class AdminController extends Controller
 
         return redirect('/admin/login');
     }
-    public function admin_dashboard(){
+    public function admin_dashboard()
+    {
         return view('admin_auth.dashboard');
     }
 }

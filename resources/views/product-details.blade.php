@@ -46,6 +46,9 @@
                             {!! $shareComponent !!}
                         </span>
                     </div>
+                    <div class=""><span class="font-bold uppercase">Product-Id:</span>
+                        <p class="badge badge-primary">{{ $single_product->product_id }}</p>
+                    </div>
                     <p class="leading-relaxed">{{ $single_product->description }}</p>
                     <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                         {{-- <div class="flex">
@@ -98,7 +101,9 @@
                             </div>
                         </div> --}}
                     </div>
-                    <div class="flex">
+                    <input type="text" value="" placeholder="Type your expected size" id="size"
+                        class="input border-2 border-gray-300 focus:border-transparent w-full max-w-xs" />
+                    <div class="flex mt-6">
                         <p class="font-bold text-xl text-[#fb5d5d]">
                             <b>৳</b><span>{{ $single_product->discount_price }}</span>
                         </p>
@@ -184,6 +189,7 @@
         $('#add_to_cart').click(function() {
             const product_id = $('#product_id').val();
             const quantity_curr = $('#product_quantity').val();
+            const size = $('#size').val();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -195,9 +201,25 @@
                 data: {
                     product_id: product_id,
                     quantity: quantity_curr,
+                    size: size,
                 },
                 success: function(data) {
-                    alert(data)
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: data,
+                    })
                 }
             });
 

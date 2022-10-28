@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('phone');
+            $table->string('address');
+            $table->text('message')->nullable();
             $table->integer('subtotal');
             $table->integer('discount')->nullable();
             $table->integer('delivery_charge')->nullable();

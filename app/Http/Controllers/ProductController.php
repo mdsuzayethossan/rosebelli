@@ -13,7 +13,8 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function get_subcategory(Request $request){
+    public function get_subcategory(Request $request)
+    {
         $subcategories = Subcategory::where('category_id', $request->category_id)->select('id', 'subcategory_name')->get();
         $str_to_send = '';
         foreach ($subcategories as $subcategory) {
@@ -72,7 +73,7 @@ class ProductController extends Controller
         ]);
         $product_image = $request->product_image;
         $extension = $product_image->getClientOriginalExtension();
-        $new_product_name = str::replace(' ', '_',($request->product_name)).'_'.$product_id . '.' . $extension;
+        $new_product_name = str::replace(' ', '_', ($request->product_name)) . '_' . $product_id . '.' . $extension;
 
         image::make($product_image)->save(public_path('/uploads/products/') . $new_product_name);
         Product::find($product_id)->update([
@@ -106,72 +107,68 @@ class ProductController extends Controller
     {
         $id = $request->id;
         $findProductModel = Product::where('id', $id);
-        if($request->category == '' && $request->subcategory == '' && $request->product_name == '' && $request->product_group == '' && $request->product_price == '' && $request->discount == '' && $request->description == '' && $request->product_image == ''){
+        if ($request->category == '' && $request->subcategory == '' && $request->product_name == '' && $request->product_group == '' && $request->product_price == '' && $request->discount == '' && $request->description == '' && $request->product_image == '') {
             return back()->with('notUpdatedProduct', 'Nothing has been updated!');
-        }
-        else {
-            if($request->category != '' ){
+        } else {
+            if ($request->category != '') {
                 $findProductModel->update([
                     'category_id' => $request->category,
                 ]);
             }
-            if($request->subcategory != ''){
+            if ($request->subcategory != '') {
                 $findProductModel->update([
                     'subcategory_id' => $request->subcategory,
                 ]);
             }
-            if($request->product_name != ''){
+            if ($request->product_name != '') {
                 $findProductModel->update([
                     'product_name' => $request->product_name,
                 ]);
             }
-            if($request->product_group != ''){
+            if ($request->product_group != '') {
                 $findProductModel->update([
                     'product_group' => $request->product_group,
                 ]);
             }
-            if($request->product_price != ''){
+            if ($request->product_price != '') {
                 $findProductModel->update([
                     'product_price' => $request->product_price,
                 ]);
             }
-            if($request->discount != ''){
+            if ($request->discount != '') {
                 $findProductModel->update([
                     'discount' => $request->discount,
                     'discount_price' => $request->product_price - ($request->product_price * $request->discount) / 100,
                 ]);
             }
-            if($request->description != ''){
+            if ($request->description != '') {
                 $findProductModel->update([
                     'description' => $request->description,
                 ]);
             }
-            if($request->product_image != ''){
+            if ($request->product_image != '') {
                 $old_image = Product::find($request->id)->product_image;
                 $existing_image = public_path() . "/uploads/products/" . $old_image;
-                if (is_file($existing_image)) {   
-                unlink($existing_image);
-                $product_image = $request->product_image;
-                $extension = $product_image->getClientOriginalExtension();
-                $new_product_name = str::replace(' ', '_',($request->product_name)).'_'.$id. '.' . $extension;
-    
-                image::make($product_image)->save(public_path('/uploads/products/') . $new_product_name);
-                $findProductModel->update([
-                    'product_image' => $new_product_name,
-                ]);
-                }
-                else {
+                if (is_file($existing_image)) {
+                    unlink($existing_image);
                     $product_image = $request->product_image;
-                $extension = $product_image->getClientOriginalExtension();
-                $new_product_name = str::replace(' ', '_',($request->product_name)).'_'.$id. '.' . $extension;
-    
-                image::make($product_image)->save(public_path('/uploads/products/') . $new_product_name);
-                $findProductModel->update([
-                    'product_image' => $new_product_name,
-                ]);
+                    $extension = $product_image->getClientOriginalExtension();
+                    $new_product_name = str::replace(' ', '_', ($request->product_name)) . '_' . $id . '.' . $extension;
 
+                    image::make($product_image)->save(public_path('/uploads/products/') . $new_product_name);
+                    $findProductModel->update([
+                        'product_image' => $new_product_name,
+                    ]);
+                } else {
+                    $product_image = $request->product_image;
+                    $extension = $product_image->getClientOriginalExtension();
+                    $new_product_name = str::replace(' ', '_', ($request->product_name)) . '_' . $id . '.' . $extension;
+
+                    image::make($product_image)->save(public_path('/uploads/products/') . $new_product_name);
+                    $findProductModel->update([
+                        'product_image' => $new_product_name,
+                    ]);
                 }
-                
             }
         }
         return back()->with('someProductFiled', 'Product updated successfully');
@@ -191,7 +188,8 @@ class ProductController extends Controller
         Product::withTrashed()->find($id)->restore();
         return back()->with('product_restore', 'Product restore sucessfully');
     }
-    public function view_product () {
+    public function view_product()
+    {
         $categories = Category::all();
         $products = Product::all();
         $subcategories = Subcategory::all();
@@ -203,5 +201,4 @@ class ProductController extends Controller
             'trashed_products' => $trashed_products,
         ]);
     }
-
 }

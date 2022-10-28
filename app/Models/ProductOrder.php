@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product_order extends Model
+class ProductOrder extends Model
 {
     use HasFactory;
+    function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }

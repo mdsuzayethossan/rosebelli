@@ -6,13 +6,14 @@
                 <h1 class="text-2xl font-semibold text-gray-900">Your Cart</h1>
             </div>
 
-            <div class="mx-auto mt-8 max-w-4xl md:mt-12">
+            <div class="mx-auto mt-8 max-w-6xl md:mt-12">
                 <div class="bg-white shadow">
-                    <ul class="grid grid-cols-5 text-lg bg-primary uppercase text-white font-bold px-8 py-4">
-                        <li class="col-span-1">IMAGE</li>
-                        <li class="col-span-2">PRODUCT NAME/UNTIL PRICE</li>
-                        <li class="text-end col-span-1">Name</li>
-                        <li class="text-end col-span-1">Name</li>
+                    <ul class="flex justify-between text-lg bg-primary uppercase text-white font-bold px-8 py-4">
+                        <li class="">IMAGE</li>
+                        <li class="">PRODUCT NAME/UNTIL PRICE</li>
+                        <li class="">Size</li>
+                        <li class="">Quantity</li>
+                        <li class="">Subtotal</li>
                     </ul>
                     @if ($carts->count() > 0)
                         <div class="px-4 py-6 sm:px-8 sm:py-10">
@@ -44,15 +45,18 @@
                                                             <b>৳</b>{{ $cart->rel_to_product->discount_price }}
                                                         </p>
                                                     </div>
-
-                                                    <div
-                                                        class="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                                                        <p
-                                                            class="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-                                                            <b>৳</b>{{ $cart->rel_to_product->discount_price * $cart->quantity }}
-                                                        </p>
-                                                        <form action="{{ route('cart.update') }}" method="POST">
-                                                            @csrf
+                                                    <form action="{{ route('cart.update') }}" method="POST">
+                                                        @csrf
+                                                        <div
+                                                            class="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                                                            <input type="text" placeholder="Type your expected size"
+                                                                id="size" name="size[{{ $cart->id }}]"
+                                                                value="{{ $cart->size }}"
+                                                                class="input mr-3 border-2 border-gray-300 h-8 focus:border-transparent focus:outline-0" />
+                                                            <p
+                                                                class="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
+                                                                <b>৳</b>{{ $cart->rel_to_product->discount_price * $cart->quantity }}
+                                                            </p>
                                                             <div class="sm:order-1">
                                                                 <div class="mx-auto flex h-8 items-stretch text-gray-600">
 
@@ -70,7 +74,7 @@
                                                                         onclick="product_increment(this.parentElement)">+</button>
                                                                 </div>
                                                             </div>
-                                                    </div>
+                                                        </div>
                                                 </div>
 
                                                 <div class="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
@@ -97,8 +101,8 @@
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <p class="text-sm text-gray-400">Shipping</p>
-                                    <p class="text-lg font-semibold text-gray-900">$8.00</p>
                                 </div>
+
                             </div>
                             <div class="mt-6 flex items-center justify-between">
                                 <p class="text-sm font-medium text-gray-900">Total</p>
