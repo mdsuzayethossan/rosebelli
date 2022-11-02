@@ -129,6 +129,12 @@
                         </div>
                     @else
                         <h3 class="text-center py-4 font-semibold">Your cart is currently empty.</h3>
+                        <div class="card-actions justify-center py-6">
+                            <a href="{{ route('index') }}"
+                                class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-red-500 hover:text-white border-2 border-red-500 focus:outline-none">
+                                Go to shopping
+                            </a>
+                        </div>
                     @endif
 
                 </div>

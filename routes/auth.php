@@ -71,10 +71,9 @@ Route::prefix('admin')->group(function () {
 
     Route::post('reset-password', [AdminPasswordResetController::class, 'store'])
         ->name('admin.password.update');
-    Route::post('register', [AdminController::class, 'store'])->name('admin.register');
-    Route::get('register', [AdminController::class, 'create']);
     Route::middleware('admin')->group(function () {
-
+        Route::get('register', [AdminController::class, 'create']);
+        Route::post('register', [AdminController::class, 'store'])->name('admin.register');
         Route::post('logout', [AdminController::class, 'admin_destroy'])->name('admin.logout');
         Route::get('/dashboard', [AdminController::class, 'admin_dashboard'])->name('admin.dashboard');
     });

@@ -44,7 +44,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="grid grid-cols-3 gap-4" id="product_container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto" id="product_container">
                 @foreach ($products as $product)
                     <div class="card card-compact bg-base-100 shadow-xl">
                         <a href="{{ route('product.details', $product->id) }}" class="cursor-pointer">

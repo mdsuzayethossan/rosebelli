@@ -25,7 +25,9 @@
         <nav class="container">
             <div class="navbar bg-base-100">
                 <div class="flex-1">
-                    <a href="{{ route('index') }}" class="btn text-xl bg-[#fb5d5d] border-none text-white">Tazmir</a>
+                    <a href="{{ route('index') }}"
+                        class="btn text-xl bg-transparent hover:bg-transparent border-none text-white"><img
+                            class="w-28" src="{{ asset('frontend_assets/1.png') }}" alt=""></a>
                 </div>
                 @auth
                     <div class="flex-none">
